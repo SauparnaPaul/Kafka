@@ -1,6 +1,7 @@
 package com.javatechie.spring.kafka.api;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class KafkaPublisherApplication {
 
 	@GetMapping("/publishJson")
 	public String publishMessage() {
-		User user=new User(1, "app", "app");
+		User user=new User(1, "app", null);
 		template.send(topic, user);
 		return "Json Data published";
 	}
