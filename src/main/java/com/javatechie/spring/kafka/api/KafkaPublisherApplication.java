@@ -1,8 +1,12 @@
 package com.javatechie.spring.kafka.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -20,6 +24,9 @@ public class KafkaPublisherApplication {
 
 	private String topic = "javatechie";
 	private String topic2 = "javatechie2";
+	List<String> messages = new ArrayList<>();
+	User userFromTopic = null;
+
 
 	@GetMapping("/publish/{name}")
 	public String publishMessage(@PathVariable String name) {
@@ -50,6 +57,25 @@ public class KafkaPublisherApplication {
 		return "Json Data published";
 	}
 
+	
+	@GetMapping("/consumeStringMessage")
+	public List<String> consumeMsg() {
+		return messages;
+	}
+
+	@GetMapping("/consumeJsonMessage")
+	public User consumeJsonMessage() {
+		return userFromTopic;
+	}
+
+	//First group consumption
+	@KafkaListener(groupId = "javatechie-1", topics = "javatechie", containerFactory = "kafkaListenerContainerFactory")
+	public List<String> getMsgFromTopic(String data) {
+		messages.add(data);
+		System.out.println("Consumed the message from first:"+data);
+		return messages;
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaPublisherApplication.class, args);
 	}
