@@ -53,7 +53,7 @@ public class ConsumerJavaTechie {
 	            @Override
 	            public void onMessage(ConsumerRecord<Integer, String> record,Acknowledgment acknowledgment) {
 	                System.out.println("onMessage from javatechie message with Manual Ack is :"+record.value());
-	                //acknowledgment.acknowledge();	            
+	                acknowledgment.acknowledge();	            
 	            }
 	        });
 	 

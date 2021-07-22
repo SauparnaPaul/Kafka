@@ -17,4 +17,12 @@ public class KafkaTopicConfiguration {
       .config(TopicConfig.COMPRESSION_TYPE_CONFIG, "zstd")
       .build();
   }
+  
+  @Bean
+  public NewTopic topicWithPartition() {
+    return TopicBuilder.name("topicWithPartition")
+      .partitions(2)
+      .replicas(2)
+      .build();
+  }
 }

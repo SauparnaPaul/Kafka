@@ -59,24 +59,6 @@ public class KafkaPublisherApplication {
 	}
 
 	
-	@GetMapping("/consumeStringMessage")
-	public List<String> consumeMsg() {
-		return messages;
-	}
-
-	@GetMapping("/consumeJsonMessage")
-	public User consumeJsonMessage() {
-		return userFromTopic;
-	}
-
-	//First group consumption
-	@KafkaListener(groupId = "javatechie-1", topics = "javatechie", containerFactory = "kafkaListenerContainerFactory")
-	public List<String> getMsgFromTopic(String data) {
-		messages.add(data);
-		System.out.println("Consumed the message from first:"+data);
-		return messages;
-	}
-	
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaPublisherApplication.class, args);
 	}

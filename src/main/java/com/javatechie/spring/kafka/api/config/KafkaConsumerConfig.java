@@ -71,5 +71,27 @@ public class KafkaConsumerConfig {
 	 * 
 	 * return new KafkaMessageListenerContainer(consumerFactory(), properties); }
 	 */
+	
+	@Bean(name="consumerFactoryWithPartitions")
+	public ConsumerFactory<String, String> consumerFactoryWithPartitions() {
+		Map<String, Object> configs = new HashMap<>();
+		configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9094");
+		configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+		configs.put("auto.commit.interval.ms", "1000");
+		//configs.put("session.timeout.ms", "25000");
+		//configs.put("max.poll.interval.ms", "125000");
+		configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "javatechie-with-partitions");
+		return new DefaultKafkaConsumerFactory<>(configs);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactoryWithPartitions() {
+		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+		factory.setConsumerFactory(consumerFactoryWithPartitions());
+		return factory;
+		
+	}
 
 }

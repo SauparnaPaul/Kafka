@@ -1,20 +1,25 @@
-Zookeeper:
 zookeeper-server-start.bat D:\Software\akz\kafka_2.12-2.7.0\config\zookeeper.properties
 
 Kafka:
 kafka-server-start.bat D:\Software\akz\kafka_2.12-2.7.0\config\server.properties
+kafka-server-start.bat D:\Software\akz\kafka_Node2\config\server.properties
 
 
 create topic:
 bin/kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 
+bin/kafka-topics.bat --create  --bootstrap-server localhost:9092,localhost:9094 --replication-factor 2 --partitions 2 --topic testP2
 
 Producer:
 kafka-console-producer.bat --broker-list localhost:9092 --topic lumenTopic
 
+kafka-console-producer.bat --broker-list localhost:9092,localhost:9094 --topic testP2
+
 
 Consumer:
 kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic lumenTopic
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092,localhost:9094 --topic testP2
 
 list of topics:
 kafka-topics.bat --bootstrap-server localhost:9092 --list
@@ -33,4 +38,5 @@ kafka-consumer-groups --bootstrap-server <kafkahost:port> --topic lumenTopic --r
 
 chear sheet:
 https://medium.com/@TimvanBaarsen/apache-kafka-cli-commands-cheat-sheet-a6f06eac01b
-
+netstat -ano|findstr "8080"
+taskkill /F /PID 1696
