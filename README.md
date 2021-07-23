@@ -1,3 +1,4 @@
+Zookeeper:
 zookeeper-server-start.bat D:\Software\akz\kafka_2.12-2.7.0\config\zookeeper.properties
 
 Kafka:
@@ -14,6 +15,8 @@ Producer:
 kafka-console-producer.bat --broker-list localhost:9092 --topic lumenTopic
 
 kafka-console-producer.bat --broker-list localhost:9092,localhost:9094 --topic testP2
+kafka-console-producer.bat --broker-list localhost:9092,localhost:9094 --topic topicWithPartition
+
 
 
 Consumer:
@@ -25,7 +28,7 @@ list of topics:
 kafka-topics.bat --bootstrap-server localhost:9092 --list
 
 delete topic:
-kafka-topics.bat --zookeeper localhost:2181 --topic javatechie --delete
+kafka-topics.bat --zookeeper localhost:2181 --topic topicname --delete
 
 D:\Software\akz\kafka_2.12-2.7.0\bin\windows>kafka-topics.bat --bootstrap-server localhost:9092 --describe --topic lumenTopic
 
@@ -40,3 +43,4 @@ chear sheet:
 https://medium.com/@TimvanBaarsen/apache-kafka-cli-commands-cheat-sheet-a6f06eac01b
 netstat -ano|findstr "8080"
 taskkill /F /PID 1696
+

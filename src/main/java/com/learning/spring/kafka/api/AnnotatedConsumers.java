@@ -20,23 +20,20 @@ public class AnnotatedConsumers {
 		@KafkaListener(groupId = "group1", topics = "testTopic", containerFactory = "kafkaListenerContainerFactory")
 		public List<String> getMsgFromTopic(String data) {
 			messages.add(data);
-			System.out.println("Consumed the message from first:"+data);
+			System.out.println("@KafkaListener  from first:"+data);
 			return messages;
 		}
 		
 		
 		//Second group consumption
-		/*
 		@KafkaListener(groupId = "group2", topics = "testTopic", containerFactory = "kafkaListenerContainerFactory")
 		public List<String> getMsgFromSecondTopic(String data) {
 			messages.add(data);
-			System.out.println("Consumed the message from second:"+data);
+			System.out.println("@KafkaListener from second:"+data);
 			return messages;
 		}
-	*/
 	
 	
-	/*
 	//partition0
 		@KafkaListener(
 				  topicPartitions = @TopicPartition(
@@ -45,7 +42,7 @@ public class AnnotatedConsumers {
 				  containerFactory = "kafkaListenerContainerFactoryWithPartitions")
 		public List<String> getMsgFromTopicWithPartition0(String data) {
 			messages.add(data);
-			System.out.println("Consumed the message from partitions0:"+data);
+			System.out.println("@KafkaListener from partitions0:"+data);
 			return messages;
 		}
 		
@@ -57,8 +54,7 @@ public class AnnotatedConsumers {
 				  containerFactory = "kafkaListenerContainerFactoryWithPartitions")
 		public List<String> getMsgFromTopicWithPartition1(String data) {
 			messages.add(data);
-			System.out.println("Consumed the message from partitions1:"+data);
+			System.out.println("@KafkaListener from partitions1:"+data);
 			return messages;
 		}
-		*/
 }

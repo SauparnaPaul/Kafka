@@ -60,17 +60,6 @@ public class KafkaConsumerConfig {
 		return factory;
 	}
 
-	/*
-	 * @Bean public KafkaMessageListenerContainer demoListenerContainer() {
-	 * ContainerProperties properties = new ContainerProperties("javatechie");
-	 * properties.setGroupId("bean"); properties.setMessageListener(new
-	 * MessageListener<Integer,String>() {
-	 * 
-	 * @Override public void onMessage(ConsumerRecord<Integer, String> record) {
-	 * System.out.println("javatechie : " + record.toString()); } });
-	 * 
-	 * return new KafkaMessageListenerContainer(consumerFactory(), properties); }
-	 */
 	
 	@Bean(name="consumerFactoryWithPartitions")
 	public ConsumerFactory<String, String> consumerFactoryWithPartitions() {

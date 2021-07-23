@@ -13,13 +13,14 @@ import org.springframework.kafka.listener.ContainerProperties.AckMode;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
 import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.kafka.support.TopicPartitionOffset;
 
 import com.learning.spring.kafka.api.config.KafkaConstants;
 import com.learning.spring.kafka.api.config.KafkaConsumerConfig;
 
 @Configuration
 @EnableKafka
-public class ConsumerJavaTechie {
+public class NonAnnotatedConsumers {
 	
 	@Autowired
 	KafkaConsumerConfig kafkaConsumerConfig;
@@ -66,7 +67,7 @@ public class ConsumerJavaTechie {
 	    }
 	
 	
-	/*
+	
 	//Partitoned consumers:
 	//Consumer for partition 0:
 	@Bean
@@ -100,5 +101,5 @@ public class ConsumerJavaTechie {
 		 
 		        return new KafkaMessageListenerContainer(consumerFactoryWithPartitions, properties);
 		    }
-		 */
+	
 }
