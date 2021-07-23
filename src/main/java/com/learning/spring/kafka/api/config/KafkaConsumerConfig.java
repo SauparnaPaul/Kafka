@@ -1,4 +1,4 @@
-package com.javatechie.spring.kafka.api.config;
+package com.learning.spring.kafka.api.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,8 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import com.javatechie.spring.kafka.api.User;
+
+import com.learning.spring.kafka.api.User;
 
 @Configuration
 @EnableKafka
@@ -27,7 +28,7 @@ public class KafkaConsumerConfig {
 		//configs.put("session.timeout.ms", "30000");
 		configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "javatechie-1");
+		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
 		return new DefaultKafkaConsumerFactory<>(configs);
 	}
 
@@ -42,14 +43,13 @@ public class KafkaConsumerConfig {
 	}
 
 	// config for json data
-
 	@Bean
 	public ConsumerFactory<String, User> userConsumerFactory() {
 		Map<String, Object> configs = new HashMap<>();
 		configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "javatechie-2");
+		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "group2");
 		return new DefaultKafkaConsumerFactory<>(configs, new StringDeserializer(), new JsonDeserializer<>(User.class));
 	}
 
@@ -82,7 +82,7 @@ public class KafkaConsumerConfig {
 		//configs.put("max.poll.interval.ms", "125000");
 		configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "javatechie-with-partitions");
+		configs.put(ConsumerConfig.GROUP_ID_CONFIG, "group-with-partitions");
 		return new DefaultKafkaConsumerFactory<>(configs);
 	}
 

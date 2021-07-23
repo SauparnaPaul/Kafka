@@ -1,4 +1,4 @@
-package com.javatechie.spring.kafka.api.config;
+package com.learning.spring.kafka.api.config;
 
 import java.util.HashMap;
 import java.util.Map;

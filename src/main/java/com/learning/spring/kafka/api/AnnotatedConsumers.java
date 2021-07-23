@@ -1,4 +1,4 @@
-package com.javatechie.spring.kafka.api;
+package com.learning.spring.kafka.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +16,18 @@ public class AnnotatedConsumers {
 	User userFromTopic = null;
 
 	
-	//First group consumption
-	/*
-		@KafkaListener(groupId = "javatechie-1", topics = "javatechie", containerFactory = "kafkaListenerContainerFactory")
+		//First group consumption
+		@KafkaListener(groupId = "group1", topics = "testTopic", containerFactory = "kafkaListenerContainerFactory")
 		public List<String> getMsgFromTopic(String data) {
 			messages.add(data);
 			System.out.println("Consumed the message from first:"+data);
 			return messages;
 		}
-		*/
+		
 		
 		//Second group consumption
 		/*
-		@KafkaListener(groupId = "javatechie-2", topics = "javatechie", containerFactory = "kafkaListenerContainerFactory")
+		@KafkaListener(groupId = "group2", topics = "testTopic", containerFactory = "kafkaListenerContainerFactory")
 		public List<String> getMsgFromSecondTopic(String data) {
 			messages.add(data);
 			System.out.println("Consumed the message from second:"+data);
@@ -36,6 +35,8 @@ public class AnnotatedConsumers {
 		}
 	*/
 	
+	
+	/*
 	//partition0
 		@KafkaListener(
 				  topicPartitions = @TopicPartition(
@@ -59,4 +60,5 @@ public class AnnotatedConsumers {
 			System.out.println("Consumed the message from partitions1:"+data);
 			return messages;
 		}
+		*/
 }
