@@ -3,6 +3,7 @@ zookeeper-server-start.bat D:\Software\akz\kafka_2.12-2.7.0\config\zookeeper.pro
 
 Kafka:
 kafka-server-start.bat D:\Software\akz\kafka_2.12-2.7.0\config\server.properties
+
 kafka-server-start.bat D:\Software\akz\kafka_Node2\config\server.properties
 
 
