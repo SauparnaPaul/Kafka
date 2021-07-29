@@ -20,8 +20,16 @@ import com.learning.spring.kafka.api.config.KafkaConstants;
 @RestController
 public class KafkaPublisherApplication {
 
+	/*
+	 * @Autowired private KafkaTemplate<String, Object> template;
+	 */
+	
 	@Autowired
-	private KafkaTemplate<String, Object> template;
+	private KafkaTemplate<String, Object> normalTemplate;
+	
+	@Autowired
+	private KafkaTemplate<String, Object> UserSerDezTemplate;
+	
 
 	List<String> messages = new ArrayList<>();
 	User userFromTopic = null;
@@ -29,7 +37,7 @@ public class KafkaPublisherApplication {
 	// Public to Topic 1 with callbacks
 	@GetMapping("/publish_to_testTopic/{name}")
 	public String publishMessage(@PathVariable String name) {
-		ListenableFuture<SendResult<String, Object>> future = template.send(KafkaConstants.TOPIC_1,  name );
+		ListenableFuture<SendResult<String, Object>> future = normalTemplate.send(KafkaConstants.TOPIC_1,  name );
 		future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
 			@Override
 			public void onSuccess(SendResult<String, Object> result) {
@@ -45,23 +53,31 @@ public class KafkaPublisherApplication {
 	
 	@GetMapping("/publish_to_testTopic-2/{name}")
 	public String publishMessageToSecondTopic(@PathVariable String name) {
-		template.send(KafkaConstants.TOPIC_2, "Hi " + name + " Welcome to java techie");
+		normalTemplate.send(KafkaConstants.TOPIC_2, "Hi " + name + " Welcome to java techie");
 		return "Data published to topic : "+KafkaConstants.TOPIC_2;
 	}
 
 	@GetMapping("/publish_to_topicWithPartition/{name}")
 	public String publishMessageToTopicWithPartition(@PathVariable String name) {
-		template.send(KafkaConstants.TOPIC_WITH_PARTITIONS, "Hi " + name + " Welcome to java techie");
+		normalTemplate.send(KafkaConstants.TOPIC_WITH_PARTITIONS, "Hi " + name + " Welcome to java techie");
 		return "Data published to topic : "+KafkaConstants.TOPIC_WITH_PARTITIONS;
 	}
 	
 	@GetMapping("/publishJson")
 	public String publishMessage() {
 		User user=new User(1, "app", null);
-		template.send(KafkaConstants.TOPIC_1, user);
+		normalTemplate.send(KafkaConstants.TOPIC_1, user);
 		return "Json Data published";
 	}
 
+	//serializer/deserializer
+	@GetMapping("/publish_to_testTopic_sd")
+	public String publishMessageSerDez() {
+		String [] address={"a","b"};
+		User user=new User(1,"one",address );
+		UserSerDezTemplate.send(KafkaConstants.TOPIC_1, user);
+		return "Data published topic : "+KafkaConstants.TOPIC_1;
+	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaPublisherApplication.class, args);

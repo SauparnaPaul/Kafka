@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import com.learning.spring.kafka.api.User;
+import com.learning.spring.kafka.api.customserializer.UserDeserializer;
+import com.learning.spring.kafka.api.customserializer.UserSerializer;
 
 @Configuration
 @EnableKafka
@@ -42,6 +45,10 @@ public class KafkaConsumerConfig {
 		
 	}
 
+	
+	
+	
+	
 	// config for json data
 	@Bean
 	public ConsumerFactory<String, User> userConsumerFactory() {
@@ -79,6 +86,30 @@ public class KafkaConsumerConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactoryWithPartitions() {
 		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
 		factory.setConsumerFactory(consumerFactoryWithPartitions());
+		return factory;
+	}
+	
+	
+	
+	
+	@Bean(name="consumerFactorySerDez")
+	public ConsumerFactory<String, String> consumerFactorySerDez() {
+		Map<String, Object> configs = new HashMap<>();
+		configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+		configs.put("auto.commit.interval.ms", "1000");
+		//configs.put("session.timeout.ms", "30000");
+		configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, UserDeserializer.class);
+		return new DefaultKafkaConsumerFactory<>(configs);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerSerDezFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+		factory.setConsumerFactory(consumerFactorySerDez());
+		//factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
+		factory.getContainerProperties().setSyncCommits(true);
 		return factory;
 		
 	}
