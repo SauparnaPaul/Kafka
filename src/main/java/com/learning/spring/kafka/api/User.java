@@ -14,7 +14,7 @@ public class User {
 
 
 	//User class toString method
-	//id,name,address
+	//id,name,address attributes
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", address=" + address + "]";
