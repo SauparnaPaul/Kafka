@@ -12,6 +12,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties.AckMode;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import com.learning.spring.kafka.api.User;
@@ -26,7 +27,7 @@ public class KafkaConsumerConfig {
 	public ConsumerFactory<String, String> consumerFactory() {
 		Map<String, Object> configs = new HashMap<>();
 		configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-		configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+		//configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
 		configs.put("auto.commit.interval.ms", "1000");
 		//configs.put("session.timeout.ms", "30000");
 		configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -39,8 +40,8 @@ public class KafkaConsumerConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
 		factory.setConsumerFactory(consumerFactory());
-		//factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
-		factory.getContainerProperties().setSyncCommits(true);
+		//factory.getContainerProperties().setAckMode(AckMode.MANUAL);
+		//factory.getContainerProperties().setSyncCommits(true);
 		return factory;
 		
 	}
