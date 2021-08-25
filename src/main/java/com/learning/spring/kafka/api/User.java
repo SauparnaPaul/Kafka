@@ -12,7 +12,7 @@ public class User {
 	private String name;
 	private String[] address;
 
-	//User class toString
+	//User class toString method for testing
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", address=" + address + "]";
